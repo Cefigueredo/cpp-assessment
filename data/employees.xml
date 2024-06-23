@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <employees>
     <employee>
+        <name>Karl Fix</name>
+        <id>103</id>
+        <department>Engineering</department>
+        <salary>100001</salary>
+    </employee>
+    <employee>
         <name>John Doe</name>
         <id>101</id>
         <department>HR</department>

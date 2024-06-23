@@ -1,5 +1,12 @@
 {
     "employees": [
+        
+        {
+            "name": "Karl Fix",
+            "id": 103,
+            "department": "Engineering",
+            "salary": 100001
+        },
         {
             "name": "John Doe",
             "id": 101,
