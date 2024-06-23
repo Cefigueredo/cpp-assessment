@@ -1,0 +1,58 @@
+{
+    "employees": [
+        {
+            "name": "Correct Employee 1",
+            "id": 100,
+            "department": "HR",
+            "salary": 60000
+        },
+        {
+            "name": "Correct Employee 2",
+            "id": 100,
+            "department": "HR",
+            "salary": 60000
+        },
+        {
+            "name": "Karl Fix",
+            "id": 0,
+            "department": "Engineering",
+            "salary": 100001
+        },
+        {
+            "name": "John Doe",
+            "id": 101,
+            "department" : "HR",
+            "salary": -30
+        },
+        {
+            "name": "Jane Smith",
+            "id": 102,
+            "department": "",
+            "salary": 60000
+        },
+        {
+            "name": 1,
+            "id": 103,
+            "department": "HR",
+            "salary": 60000
+        },
+        {
+            "name": "Kevin Hart",
+            "id": true,
+            "department": "HR",
+            "salary": 60000
+        },
+        {
+            "name": "Josh Hopkins",
+            "id": 104,
+            "department": "HR",
+            "salary": 60000
+        },
+        {
+            "name": "Addam Smith",
+            "id": 105,
+            "department": "HR",
+            "salary": "QR"
+        }
+    ]
+}

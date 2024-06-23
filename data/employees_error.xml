@@ -1,0 +1,56 @@
+<employees>
+    <employee>
+        <name>Correct Employee 1</name>
+        <id>100</id>
+        <department>HR</department>
+        <salary>60000</salary>
+    </employee>
+    <employee>
+        <name>Correct Employee 2</name>
+        <id>100</id>
+        <department>HR</department>
+        <salary>60000</salary>
+    </employee>
+    <employee>
+        <name>Karl Fix</name>
+        <id>0</id>
+        <department>Engineering</department>
+        <salary>100001</salary>
+    </employee>
+    <employee>
+        <name>John Doe</name>
+        <id>101</id>
+        <department>HR</department>
+        <salary>-30</salary>
+    </employee>
+    <employee>
+        <name>Jane Smith</name>
+        <id>102</id>
+        <department></department>
+        <salary>60000</salary>
+    </employee>
+    <employee>
+        <name>1</name>
+        <id>103</id>
+        <department>HR</department>
+        <salary>60000</salary>
+    </employee>
+    <employee>
+        <name>Kevin Hart</name>
+        <id>true</id>
+        <department>HR</department>
+        <salary>60000</salary>
+    </employee>
+    <employee>
+        <name>Josh Hopkins</name>
+        <id>104</id>
+        <department>HR</department>
+        <salary>60000</salary>
+    </employee>
+    <employee>
+        <name>Addam Smith</name>
+        <id>105</id>
+        <department>HR</department>
+        <salary>QR</salary>
+    </employee>
+</employees>
