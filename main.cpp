@@ -138,12 +138,13 @@ void executeFileParsing(const string &filePath) {
     }
 }
 
-int main() {
-    cout << "Please insert the name of the file to read: ";
-    string filePath = "data/";
-    string fileName = "";
-    cin >> fileName;
-    filePath += fileName;
+int main(int argc, char* argv[]) {
+    if (argc != 2) {
+        std::cerr << "Usage: " << argv[0] << " <input_file>" << std::endl;
+        return 1;
+    }
+
+    std::string filePath = argv[1];
     
     try {
         executeFileParsing(filePath);

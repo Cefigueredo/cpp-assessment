@@ -1,0 +1,34 @@
+
+#############################
+# Executing file parsing... #
+#############################
+
+* Adding employee: Correct Employee 1
+* Adding employee: Correct Employee 2
+* Adding employee: Karl Fix
+* Adding employee: John Doe
+* Adding employee: Jane Smith
+
+################################
+# Executing output handling... #
+################################
+
+----- Average salary of the employees: ----
+
+Number of employees: 1
+Average of salaries: 60000
+
+----- Highest paid employee: -----
+
+ID: 100
+Name: Correct Employee 1
+Department: HR
+Salary: 60000
+
+----- Employees ordered by ID: -----
+
+ID: 100
+Name: Correct Employee 1
+Department: HR
+Salary: 60000
+

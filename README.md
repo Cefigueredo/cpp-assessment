@@ -8,28 +8,35 @@ This proejct was developed on a Macbook Pro with macOS Sonoma 14.3.1 and chip M1
 
 # Instructions
 
-1. Clone the repository
-2. Open the project in Visual Studio Code
-3. Open the terminal in Visual Studio Code
-4. Give permission to the scripts to compile and run the project:
+1. You'll need jq to run the project. You can install it using brew:
 ```bash
-chmod +x build.sh run.sh
+brew install jq
+```
+2. You'll need to have g++ installed. You can install it using brew:
+```bash
+brew install gcc
+```
+3. Clone the repository
+4. Open the project in Visual Studio Code
+5. Open the terminal in Visual Studio Code
+6. Give permission to the scripts to compile and run the project:
+```bash
+chmod +x build.sh run.sh validate_xml.sh validate_json.sh test.sh
 ```
 
-5. Compile the project (optional):
+7. Compile the project:
 ```bash
 ./build.sh
 ```
 
-6. Run the project:
+8. Run the project with a file in XML or JSON format and an output file in txt. You can use the next files:
 ```bash
-./run.sh
+./run.sh data/employees.xml output.txt
 ```
 
-5. The program will ask you to enter the name of the file. Your file has to be in the data/ folder and it has to be in XML or JSON format. You can use the next files:
+9. To test the project, you can run the next command (if you want to add cases, add the respective output file in the output_test/ folder with the expected output. Also, specify the case in the test.sh file.):
 ```bash
-employees.xml
-employees.json
+./test.sh
 ```
 
 If you want to use your own file, you can create a new file in the data/ folder and follow the next format for XML:

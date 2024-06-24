@@ -1,0 +1,44 @@
+
+#############################
+# Executing file parsing... #
+#############################
+
+* Adding employee: Karl Fix
+* Adding employee: John Doe
+* Adding employee: Jane Smith
+JSON file loaded successfully.
+
+
+################################
+# Executing output handling... #
+################################
+
+----- Average salary of the employees: ----
+
+Number of employees: 3
+Average of salaries: 70000.3
+
+----- Highest paid employee: -----
+
+ID: 103
+Name: Karl Fix
+Department: Engineering
+Salary: 100001
+
+----- Employees ordered by ID: -----
+
+ID: 101
+Name: John Doe
+Department: HR
+Salary: 50000
+
+ID: 102
+Name: Jane Smith
+Department: Engineering
+Salary: 60000
+
+ID: 103
+Name: Karl Fix
+Department: Engineering
+Salary: 100001
+
