@@ -8,6 +8,7 @@ TEST_CASES=(
     "data/employees.xml output_test/expected_output1.txt"
     "data/employees.json output_test/expected_output2.txt"
     "data/employees_error.json output_test/expected_output3.txt"
+    "data/employees_error.xml output_test/expected_output4.txt"
     # Add more test cases as needed
 )
 

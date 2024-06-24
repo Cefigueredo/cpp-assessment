@@ -25,12 +25,6 @@
         <salary>-30</salary>
     </employee>
     <employee>
-        <name>Jane Smith</name>
-        <id>102</id>
-        <department></department>
-        <salary>60000</salary>
-    </employee>
-    <employee>
         <name>1</name>
         <id>103</id>
         <department>HR</department>

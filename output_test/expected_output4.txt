@@ -10,9 +10,8 @@ Exception adding employee: Duplicate ID found: 100
 Exception adding employee: ID must be a positive integer
 * Adding employee: John Doe
 Exception adding employee: Salary must be a positive integer
-* Adding employee: Jane Smith
-Exception adding employee: Department cannot be empty
-Failed loading an object in JSON file: [json.exception.type_error.302] type must be string, but is number
+* Adding employee: 1
+Failed loading an object in XML file: stoi: no conversion
 
 ################################
 # Executing output handling... #
@@ -20,7 +19,7 @@ Failed loading an object in JSON file: [json.exception.type_error.302] type must
 
 ----- Average salary of the employees: ----
 
-Number of employees: 1
+Number of employees: 2
 Average of salaries: 60000
 
 ----- Highest paid employee: -----
@@ -34,6 +33,11 @@ Salary: 60000
 
 ID: 100
 Name: Correct Employee 1
+Department: HR
+Salary: 60000
+
+ID: 103
+Name: 1
 Department: HR
 Salary: 60000
 

@@ -5,7 +5,6 @@
 #include <sstream>
 #include <set>
 #include "employee.cpp"
-#include "exceptions.cpp"
 #include "utils/main.cpp"
 
 using namespace std;
@@ -74,31 +73,41 @@ void addEmployee(const string &name, int id, const string &department, int salar
         employees.push_back(Employee(name, id, department, salary));
         employeeIDs.insert(id);
     } catch (const invalid_argument &e) {
-        cerr << "Exception adding employee: " << e.what() << endl;
+        cout << "Exception adding employee: " << e.what() << endl;
         return;
     }
 }
 
 void parseXML(const string &filePath) {
     tinyxml2::XMLDocument doc;
-    if (doc.LoadFile(filePath.c_str()) == tinyxml2::XML_SUCCESS) {
-        tinyxml2::XMLElement* root = doc.FirstChildElement("employees");
+    try {
+        if (doc.LoadFile(filePath.c_str()) == tinyxml2::XML_SUCCESS) {
+            tinyxml2::XMLElement* root = doc.FirstChildElement("employees");
 
-        if (root) {
-            for (tinyxml2::XMLElement* employee = root->FirstChildElement("employee"); employee; employee = employee->NextSiblingElement("employee")) {
-                const char *name = employee->FirstChildElement("name")->GetText();
-                const char *id = employee->FirstChildElement("id")->GetText();
-                const char *department = employee->FirstChildElement("department")->GetText();
-                const char *salary = employee->FirstChildElement("salary")->GetText();
+            if (root) {
+                for (tinyxml2::XMLElement* employee = root->FirstChildElement("employee"); employee; employee = employee->NextSiblingElement("employee")) {
+                    const char *name = employee->FirstChildElement("name")->GetText();
+                    const char *id = employee->FirstChildElement("id")->GetText();
+                    const char *department = employee->FirstChildElement("department")->GetText();
+                    const char *salary = employee->FirstChildElement("salary")->GetText();
 
-                addEmployee(name, stoi(id), department, stoi(salary));
+                    int idInt = stoi(id);
+                    int salaryInt = stoi(salary);
+
+                    addEmployee(name, idInt, department, salaryInt);
+                }
+                cout << "XML file loaded successfully.\n" << endl;
+            } else {
+                cout << "No root element found.\n";
             }
-            cout << "XML file loaded successfully.\n" << endl;
         } else {
-            cout << "No root element found.\n";
+            throw runtime_error("Failed loading XML file.");
         }
-    } else {
-        cerr << "Failed loading an object in XML file" << endl;
+    } catch (const runtime_error &e) {
+        cout << "Failed loading an object in XML file: " << e.what() << endl;
+        return;
+    } catch (const invalid_argument &e) {
+        cout << "Failed loading an object in XML file: " << e.what() << endl;
         return;
     }
 }
@@ -121,7 +130,7 @@ void parseJSON(const string &filePath) {
             cout << endl;
         }
     } catch (const json::exception &e) {
-        cerr << "Failed loading an object in JSON file: " << e.what() << endl;
+        cout << "Failed loading an object in JSON file: " << e.what() << endl;
         return;
     }
 }
@@ -133,14 +142,12 @@ void executeFileParsing(const string &filePath) {
         parseXML(filePath);
     } else if (isJSONFile(filePath)){
         parseJSON(filePath);
-    } else {
-        throw WrongFileException();
     }
 }
 
 int main(int argc, char* argv[]) {
     if (argc != 2) {
-        std::cerr << "Usage: " << argv[0] << " <input_file>" << std::endl;
+        std::cout << "Usage: " << argv[0] << " <input_file>" << std::endl;
         return 1;
     }
 
@@ -149,14 +156,11 @@ int main(int argc, char* argv[]) {
     try {
         executeFileParsing(filePath);
         handleOutput();
-    } catch (const WrongFileException &e) {
-        cerr << e.what() << endl;
-        return 1;
     } catch (const runtime_error &e) {
-        cerr << e.what() << endl;
+        cout << e.what() << endl;
         return 1;
     } catch (const invalid_argument &e) {
-        cerr << e.what() << endl;
+        cout << e.what() << endl;
         return 1;
     }
     return 0;
