@@ -4,7 +4,7 @@ Owner: Carlos Figueredo - Software Engineer
 
 This project is a technical assessment for Amadeus. The project is a C++ application that reads a file in format XML or JSON containing a list of employees. It calculates the average salary of the employees, prints the employees with the highest salary and displays the employees ordered by ID.
 
-This proejct was developed on a Macbook Pro with macOS Sonoma 14.3.1 and chip M1 Pro. The project was developed using C++20 in Visual Studio Code.
+This project was developed on a Macbook Pro with macOS Sonoma 14.3.1 and chip M1 Pro. The project was developed using C++20 in Visual Studio Code.
 
 # Instructions
 
@@ -29,7 +29,7 @@ chmod +x build.sh run.sh validate_xml.sh validate_json.sh test.sh
 ./build.sh
 ```
 
-8. Run the project with a file in XML or JSON format and an output file in txt. You can use the next files:
+8. Run the project with a file in XML or JSON format and an output file in txt. You can use the next command to run the project with the employees.xml file in the data/ folder and output.txt file in the root folder:
 ```bash
 ./run.sh data/employees.xml output.txt
 ```
@@ -41,7 +41,6 @@ chmod +x build.sh run.sh validate_xml.sh validate_json.sh test.sh
 
 If you want to use your own file, you can create a new file in the data/ folder and follow the next format for XML:
 ```xml
-<?xml version="1.0"?>
 <?xml version="1.0" encoding="UTF-8"?>
 <employees>
     <employee>
