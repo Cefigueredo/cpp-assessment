@@ -65,8 +65,6 @@ void handleOutput() {
     printOrderedEmployees();
 }
 
-
-
 void addEmployee(const string &name, int id, const string &department, int salary) {
     try {
         cout << "* Adding employee: " << name << endl;
