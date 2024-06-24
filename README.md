@@ -11,16 +11,22 @@ This proejct was developed on a Macbook Pro with macOS Sonoma 14.3.1 and chip M1
 1. Clone the repository
 2. Open the project in Visual Studio Code
 3. Open the terminal in Visual Studio Code
-4. Run the following command to compile the project:
+4. Give permission to the scripts to compile and run the project:
 ```bash
-g++ -std=c++20 -o main main.cpp
-```
-5. Run the following command to execute the project:
-```bash
-./main
+chmod +x build.sh run.sh
 ```
 
-6. The program will ask you to enter the name of the file. Your file has to be in the data/ folder and it has to be in XML or JSON format. You can use the next files:
+5. Compile the project (optional):
+```bash
+./build.sh
+```
+
+6. Run the project:
+```bash
+./run.sh
+```
+
+5. The program will ask you to enter the name of the file. Your file has to be in the data/ folder and it has to be in XML or JSON format. You can use the next files:
 ```bash
 employees.xml
 employees.json
