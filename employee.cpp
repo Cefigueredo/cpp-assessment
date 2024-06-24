@@ -29,8 +29,8 @@ public:
     string getDepartment() const { return department; }
     int getSalary() const { return salary; }
     void giveData() const {
-        cout << "Name: " << name << endl;
         cout << "ID: " << id << endl;
+        cout << "Name: " << name << endl;
         cout << "Department: " << department << endl;
         cout << "Salary: " << salary << endl;
     }

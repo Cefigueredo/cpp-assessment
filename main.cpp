@@ -6,6 +6,7 @@
 #include <set>
 #include "employee.cpp"
 #include "exceptions.cpp"
+#include "utils/main.cpp"
 
 using namespace std;
 using json = nlohmann::json;
@@ -13,37 +14,6 @@ using json = nlohmann::json;
 vector<Employee> employees {};
 set<int> employeeIDs {};
 
-bool isXMLFile(const string &filePath) {
-    ifstream file(filePath);
-    if (!file.is_open()) return false;
-    string line;
-    while (getline(file, line)) {
-        if (line.find("<?xml") != string::npos) {
-            return true;
-        }
-    }
-    return false;
-}
-
-bool isJSONFile(const string &filePath) {
-    ifstream file(filePath);
-    if (!file.is_open()) return false;
-    string line;
-    while (getline(file, line)) {
-        line.erase(remove_if(line.begin(), line.end(), ::isspace), line.end());
-        if (!line.empty() && (line[0] == '{' || line[0] == '[')) {
-            return true;
-        }
-    }
-    return false;
-}
-
-void printEmployees() {
-    for (const auto &employee : employees) {
-        employee.giveData();
-        cout << endl;
-    }
-}
 
 void averageSalary() {
     int total = 0;
@@ -51,7 +21,7 @@ void averageSalary() {
         total += employee.getSalary();
     }
     double average = static_cast<double> (total) / employees.size();
-    cout << "----- Average salary of the employees: ----"  << endl;
+    cout << "----- Average salary of the employees: ----\n"  << endl;
     cout << "Number of employees: " << employees.size() << endl;
     cout << "Average of salaries: " << average << endl;
     cout << endl;
@@ -60,7 +30,7 @@ void averageSalary() {
 void getHighestPaidEmployee() {
     int maxSalary = 0;
     Employee highestPaidEmployee("Dummy", 1, "Dummy", 1);
-    for (const auto& employee : employees) {
+    for (const auto &employee : employees) {
         if (employee.getSalary() > maxSalary) {
             maxSalary = employee.getSalary();
             highestPaidEmployee = employee;
@@ -71,21 +41,17 @@ void getHighestPaidEmployee() {
     cout << endl;
 }
 
-void orderEmployeesByID() {
+
+void printOrderedEmployees() {
+    cout << "----- Employees ordered by ID: -----\n" << endl;
     sort(employees.begin(), employees.end(), [](const Employee &a, const Employee &b) {
         return a.getId() < b.getId();
     });
-}
 
-void printSection(const string &section) {
-    const int numberOfHashtags = 4 + section.size();
-    string hashtags(numberOfHashtags, '#');
-
-    cout << endl;
-    cout << hashtags << endl;
-    cout << "# "<< section << " #\n";
-    cout << hashtags << endl;
-    cout << endl;
+    for (const auto &employee : employees) {
+        employee.giveData();
+        cout << endl;
+    }
 }
 
 void handleOutput() {
@@ -96,9 +62,7 @@ void handleOutput() {
     printSection("Executing output handling...");
     averageSalary();
     getHighestPaidEmployee();
-    orderEmployeesByID();
-    cout << "----- Employees ordered by ID: -----\n";
-    printEmployees();
+    printOrderedEmployees();
 }
 
 
@@ -111,7 +75,7 @@ void addEmployee(const string &name, int id, const string &department, int salar
         }
         employees.push_back(Employee(name, id, department, salary));
         employeeIDs.insert(id);
-    } catch (const invalid_argument& e) {
+    } catch (const invalid_argument &e) {
         cerr << "Exception adding employee: " << e.what() << endl;
         return;
     }
@@ -131,16 +95,13 @@ void parseXML(const string &filePath) {
 
                 addEmployee(name, stoi(id), department, stoi(salary));
             }
-            cout << "XML file loaded successfully.\n";
-            cout << endl;
+            cout << "XML file loaded successfully.\n" << endl;
         } else {
             cout << "No root element found.\n";
         }
     } else {
-        if (employees.empty()) {
-            throw runtime_error("Failed loading XML file.");
-        }
         cerr << "Failed loading an object in XML file" << endl;
+        return;
     }
 }
 
@@ -161,11 +122,9 @@ void parseJSON(const string &filePath) {
             cout << "JSON file loaded successfully.\n";
             cout << endl;
         }
-    } catch (const json::exception& e) {
-        if (employees.empty()) {
-            throw runtime_error("Failed loading JSON file.");
-        }
+    } catch (const json::exception &e) {
         cerr << "Failed loading an object in JSON file: " << e.what() << endl;
+        return;
     }
 }
 
@@ -191,13 +150,13 @@ int main() {
     try {
         executeFileParsing(filePath);
         handleOutput();
-    } catch (const WrongFileException& e) {
+    } catch (const WrongFileException &e) {
         cerr << e.what() << endl;
         return 1;
-    } catch (const runtime_error& e) {
+    } catch (const runtime_error &e) {
         cerr << e.what() << endl;
         return 1;
-    } catch (const invalid_argument& e) {
+    } catch (const invalid_argument &e) {
         cerr << e.what() << endl;
         return 1;
     }
