@@ -4,56 +4,11 @@
 #include <fstream>
 #include <sstream>
 #include <set>
+#include "employee.cpp"
+#include "exceptions.cpp"
 
 using namespace std;
 using json = nlohmann::json;
-
-class WrongFileException : public exception {
-public:
-    const char* what() const noexcept override {
-        return "The file is not an XML or JSON file.";
-    }
-};
-
-class Employee {
-public:
-    Employee(
-        const string& name,
-        int id, 
-        const string& department, 
-        int salary
-    ) : name{name}, id{id}, department{department}, salary{salary} {
-        if (name.empty()) {
-            throw invalid_argument("Name cannot be empty");
-        }
-        if (id <= 0) {
-            throw invalid_argument("ID must be a positive integer");
-        }
-        if (department.empty()) {
-            throw invalid_argument("Department cannot be empty");
-        }
-        if (salary <= 0) {
-            throw invalid_argument("Salary must be a positive integer");
-        }
-    }
-
-    string getName() const { return name; }
-    int getId() const { return id; }
-    string getDepartment() const { return department; }
-    int getSalary() const { return salary; }
-    void giveData() const {
-        cout << "Name: " << name << endl;
-        cout << "ID: " << id << endl;
-        cout << "Department: " << department << endl;
-        cout << "Salary: " << salary << endl;
-    }
-
-private:
-    string name;
-    int id;
-    string department;
-    int salary;
-};
 
 vector<Employee> employees {};
 set<int> employeeIDs {};
@@ -84,7 +39,7 @@ bool isJSONFile(const string &filePath) {
 }
 
 void printEmployees() {
-    for (const auto& employee : employees) {
+    for (const auto &employee : employees) {
         employee.giveData();
         cout << endl;
     }
@@ -97,7 +52,8 @@ void averageSalary() {
     }
     double average = static_cast<double> (total) / employees.size();
     cout << "----- Average salary of the employees: ----"  << endl;
-    cout << "Value: " << average << endl;
+    cout << "Number of employees: " << employees.size() << endl;
+    cout << "Average of salaries: " << average << endl;
     cout << endl;
 }
 
@@ -116,26 +72,28 @@ void getHighestPaidEmployee() {
 }
 
 void orderEmployeesByID() {
-    sort(employees.begin(), employees.end(), [](const Employee& a, const Employee& b) {
+    sort(employees.begin(), employees.end(), [](const Employee &a, const Employee &b) {
         return a.getId() < b.getId();
     });
 }
 
+void printSection(const string &section) {
+    const int numberOfHashtags = 4 + section.size();
+    string hashtags(numberOfHashtags, '#');
+
+    cout << endl;
+    cout << hashtags << endl;
+    cout << "# "<< section << " #\n";
+    cout << hashtags << endl;
+    cout << endl;
+}
+
 void handleOutput() {
-    cout << endl;
-    cout << "############################################\n";
-    cout << "####### Executing output handling... #######\n";
-    cout << "############################################\n";
-    cout << endl;
-    try {
-        if (employees.empty()) {
-            throw invalid_argument("No employees to handle output.");
-            return;
-        }
-    } catch (const invalid_argument& e) {
-        cerr << e.what() << endl;
-        return;
+    if (employees.empty()) {
+        throw invalid_argument("No employees were loaded.");
     }
+
+    printSection("Executing output handling...");
     averageSalary();
     getHighestPaidEmployee();
     orderEmployeesByID();
@@ -145,7 +103,7 @@ void handleOutput() {
 
 
 
-void addEmployee(const string& name, int id, const string& department, int salary) {
+void addEmployee(const string &name, int id, const string &department, int salary) {
     try {
         cout << "* Adding employee: " << name << endl;
         if (employeeIDs.find(id) != employeeIDs.end()) {
@@ -159,10 +117,9 @@ void addEmployee(const string& name, int id, const string& department, int salar
     }
 }
 
-void parseXML(const string& filePath) {
+void parseXML(const string &filePath) {
     tinyxml2::XMLDocument doc;
     if (doc.LoadFile(filePath.c_str()) == tinyxml2::XML_SUCCESS) {
-        cout << "XML file loaded successfully.\n";
         tinyxml2::XMLElement* root = doc.FirstChildElement("employees");
 
         if (root) {
@@ -174,23 +131,25 @@ void parseXML(const string& filePath) {
 
                 addEmployee(name, stoi(id), department, stoi(salary));
             }
-            handleOutput();
+            cout << "XML file loaded successfully.\n";
+            cout << endl;
         } else {
             cout << "No root element found.\n";
         }
     } else {
-        throw runtime_error("Failed to load XML file.");
+        if (employees.empty()) {
+            throw runtime_error("Failed loading XML file.");
+        }
+        cerr << "Failed loading an object in XML file" << endl;
     }
 }
 
-void parseJSON(const string& filePath) {
+void parseJSON(const string &filePath) {
     ifstream file(filePath);
     json jsonData;
 
     try {
         if (file >> jsonData) {
-            cout << "JSON file loaded successfully.\n";
-            cout << endl;
             for (const auto& employee : jsonData["employees"]) {
                 string name = employee["name"];
                 int id = employee["id"];
@@ -199,32 +158,46 @@ void parseJSON(const string& filePath) {
 
                 addEmployee(name, id, department, salary);
             }
-            handleOutput();
+            cout << "JSON file loaded successfully.\n";
+            cout << endl;
         }
     } catch (const json::exception& e) {
-        cerr << "Failed to load JSON file: " << e.what() << endl;
+        if (employees.empty()) {
+            throw runtime_error("Failed loading JSON file.");
+        }
+        cerr << "Failed loading an object in JSON file: " << e.what() << endl;
+    }
+}
+
+void executeFileParsing(const string &filePath) {
+    printSection("Executing file parsing...");
+
+    if (isXMLFile(filePath)) {
+        parseXML(filePath);
+    } else if (isJSONFile(filePath)){
+        parseJSON(filePath);
+    } else {
+        throw WrongFileException();
     }
 }
 
 int main() {
-    cout << "Please insert the name of the file to read:" << endl;
+    cout << "Please insert the name of the file to read: ";
     string filePath = "data/";
     string fileName = "";
     cin >> fileName;
     filePath += fileName;
     
     try {
-        if (isXMLFile(filePath)) {
-            parseXML(filePath);
-        } else if (isJSONFile(filePath)){
-            parseJSON(filePath);
-        } else {
-            throw WrongFileException();
-        }
+        executeFileParsing(filePath);
+        handleOutput();
     } catch (const WrongFileException& e) {
         cerr << e.what() << endl;
         return 1;
     } catch (const runtime_error& e) {
+        cerr << e.what() << endl;
+        return 1;
+    } catch (const invalid_argument& e) {
         cerr << e.what() << endl;
         return 1;
     }
