@@ -1,8 +1,8 @@
-# Amadeus Technical Assessment
+# C++ Technical Assessment
 
 Owner: Carlos Figueredo - Software Engineer
 
-This project is a technical assessment for Amadeus. The project is a C++ application that reads a file in format XML or JSON containing a list of employees. It calculates the average salary of the employees, prints the employees with the highest salary and displays the employees ordered by ID.
+This project is a technical assessment. The project is a C++ application that reads a file in format XML or JSON containing a list of employees. It calculates the average salary of the employees, prints the employees with the highest salary and displays the employees ordered by ID.
 
 This project was developed on a Macbook Pro with macOS Sonoma 14.3.1 and chip M1 Pro. The project was developed using C++20 in Visual Studio Code.
 
